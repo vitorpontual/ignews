@@ -4,9 +4,7 @@ import { api } from '../../services/api';
 import { getStripeJs } from '../../services/stripe-js';
 import styles from './styles.module.scss'
 
-interface SubscribeButtonProps {
-  priceId: string
-}
+
 
 // Guardar Credenciais Secretas
 // (SSR)
@@ -14,9 +12,10 @@ interface SubscribeButtonProps {
 // *API routes 
 
 
-export function SubscribeButton({ priceId }: SubscribeButtonProps) {
+export function SubscribeButton() {
   const [session] = useSession();
   const router = useRouter();
+ 
 
   async function handleSubscribe(){
     if(!session) {
