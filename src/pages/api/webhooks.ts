@@ -29,7 +29,6 @@ const relevantEvents = new Set([
 ])
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log('aqui')
 
   if (req.method === 'POST') {
     const buf = await buffer(req)
@@ -53,7 +52,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           case 'customer.subscription.deleted':
 
             const subscription = event.data.object as Stripe.Subscription;
-            console.log(subscription)
 
             await saveSubscription(
               subscription.id, subscription.customer.toString(),
