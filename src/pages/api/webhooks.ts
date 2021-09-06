@@ -39,13 +39,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       event = stripe.webhooks.constructEvent(buf, secret, process.env.STRIPE_WEBHOOK_SECRET)
     } catch (err) {
-      console.log(err)
-      return res.status(400).send(`Webhook error: ${err.message}`)
+      return res.status(400).send(`Webhook error PORRA: ${err.message}`)
     }
 
     const { type } = event
 
-    
     if (relevantEvents.has(type)) {
       try {
         switch (type) {
@@ -72,16 +70,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         }
       } catch (err) {
         // sentry, bugsnag
-        console.log(err)
-        return res.json({error: 'Webhook handler failed'})
+        return res.json({ error: 'Webhook handler failed' })
       }
-  }
+    }
 
-  res.json({ received: true })
-} else {
-  res.setHeader('Allow', 'POST')
-  res.status(405).end('Method not allowed')
-}
+    res.json({ received: true })
+  } else {
+    res.setHeader('Allow', 'POST')
+    res.status(405).end('Method not allowed')
+  }
 
 
 }
